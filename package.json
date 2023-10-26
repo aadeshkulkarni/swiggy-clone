@@ -1,0 +1,29 @@
+{
+  "name": "swiggy",
+  "version": "1.0.0",
+  "description": "food ordering app",
+  "main": "App.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aadeshkulkarni/annapurna-express.git"
+  },
+  "author": "Aadesh Kulkarni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aadeshkulkarni/annapurna-express/issues"
+  },
+  "homepage": "https://github.com/aadeshkulkarni/annapurna-express#readme",
+  "dependencies": {
+    "parcel": "^2.10.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
