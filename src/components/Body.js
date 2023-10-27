@@ -4,6 +4,7 @@ import { RESTAURANTS_API } from '../utils/constants'
 import Shimmer from "./Shimmer";
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([])
+    const [filteredRestaurant, setFilteredRestaurants] = useState([])
     const [searchText, setSearchText] = useState("")
     useEffect(() => {
         fetchRestaurants();
@@ -14,6 +15,7 @@ const Body = () => {
         const json = await data.json()
         const list = json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
         setListOfRestaurants(list);
+        setFilteredRestaurants(list);
     }
 
     if (listOfRestaurants.length === 0) {
@@ -26,17 +28,22 @@ const Body = () => {
                 <button onClick={() => {
                     //Filter the restaurant cards and update the UI
                     console.log(searchText)
+                    const filteredRest = listOfRestaurants.filter(restaurant => restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase()))
+                    if(filteredRest.length !=0){
+                        setFilteredRestaurants(filteredRest)
+                    }
+                    else{
+                        setFilteredRestaurants(listOfRestaurants)
+                    }
                 }}>Search</button>
             </div>
             <button className="filter-btn" onClick={() => {
-                const data = listOfRestaurants.filter(restaurant => {
-                    return restaurant?.info?.avgRating >= 4
-                })
-                setListOfRestaurants(data)
+                const filteredRestaurant = listOfRestaurants.filter(restaurant => restaurant?.info?.avgRating >= 4)
+                setListOfRestaurants(filteredRestaurant)
             }}>Top Rated Restaurants</button>
         </div>
         <div className="restaurant-container">
-            {listOfRestaurants.map((restaurant, index) => <RestaurantCard restaurantData={restaurant} key={index} />)}
+            {filteredRestaurant.map((restaurant, index) => <RestaurantCard restaurantData={restaurant} key={index} />)}
         </div>
     </div >)
 }

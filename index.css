@@ -6,12 +6,14 @@
 body {
   font-family: Helvetica;
   font-size: 16px;
+  background:#F9F9F9;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #FFF;
 }
 
 .logo-container {
@@ -123,4 +125,34 @@ body {
 
 .filter{
     display:flex;
+}
+
+.rupee:before {
+  content:"\20B9 "
+}
+.menu{
+  display:grid;
+  grid-template-columns: 3fr 6fr 3fr;
+  grid-gap:1rem;
+  padding:1rem;
+}
+
+.menu-card {
+  display: grid;
+  grid-template-columns:10fr 2fr;
+  padding:1rem 0;
+}
+.menu-left-card{
+  display:grid;
+  gap: 0.5rem;
+}
+.item-img{
+  width:100px;
+  display:relative;
+}
+.item-description{
+  padding:0.5rem;
+  font-weight:200;
+  color:#999;
+  font-size:0.8rem;
 }
