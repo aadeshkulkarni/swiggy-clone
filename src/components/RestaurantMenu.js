@@ -1,62 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { CDN_URL, RESTAURANTS_MENU_API } from '../utils/constants'
 import { useParams } from 'react-router-dom';
 import Shimmer from './Shimmer'
+import useRestaurantMenu from '../utils/useRestaurantMenu';
+import RestaurantCategory from './RestaurantCategory';
+import { useState } from 'react';
 
 const RestaurantMenu = () => {
-    const params = useParams()
-    const resId = params?.resId
-    const [menu, setMenu] = useState(null)
-    const [restaurantInfo, setRestaurantInfo] = useState(null)
-    useEffect(() => {
-        fetchRestaurantMenu();
-    }, [])
-    async function fetchRestaurantMenu() {
-        const data = await fetch(RESTAURANTS_MENU_API + resId)
-        const json = await data.json()
-        setRestaurantInfo(json?.data?.cards[0]?.card?.card?.info)
-        const menuData = json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-        const cleanedMenu = menuData?.filter(card => card.card.card.itemCards !== undefined)
-        setMenu(cleanedMenu)
-    }
-    const { name, cuisines } = restaurantInfo
-    if (menu === null) {
+    const [openMenuIndex, setOpenMenuIndex] = useState(0)
+    const { resId } = useParams()
+    const { restaurantInfo, menuInfo } = useRestaurantMenu(resId)
+    if (menuInfo === null) {
         return <Shimmer />
     }
+
     return (
-        <div className="menu">
-            <div></div>
-            <div>
-                <h1>{name}</h1>
-                <p>{cuisines.join(", ")}</p>
+        <div className="px-8 flex flex-col justify-center items-center">
+            <div className="p-4 w-3/4 justify-start text-left">
+                <div className="font-bold">{restaurantInfo?.name}</div>
+                <p className="font-light text-sm text-gray-500">{restaurantInfo?.cuisines.join(", ")}</p>
+                <p className="font-light text-sm text-gray-500">{restaurantInfo?.areaName}, {restaurantInfo?.sla?.lastMileTravelString}</p>
+                <div className="my-2 text-gray-500 pb-2 border-bottom border-dashed border-gray-500">{restaurantInfo?.feeDetails?.message}</div>
+                <div className="text-lg font-bold">{restaurantInfo?.costForTwoMessage}</div>
                 <h2>Menu</h2>
                 <h3>{restaurantInfo?.title}</h3>
-                {menu?.map(card => {
-                    return (<div>
-                        <h3>{card?.card?.card?.title}</h3>
-                        {card?.card?.card?.itemCards?.map((item) => <MenuCard item={item} />)}
-                    </div>)
-                })}
             </div>
-            <div></div>
+            <div className="p-4 w-3/4">
+                {menuInfo?.map((card, index) => <RestaurantCategory key={card?.card?.card?.id} card={card?.card?.card} showItems={index === openMenuIndex} setOpenMenuIndex={() => setOpenMenuIndex(openMenuIndex === index ? null : index)} />)}
+            </div>
         </div>
     )
 }
 
-
-const MenuCard = (props) => {
-    const { item } = props
-    return (<div className="menu-card">
-        <div className="menu-left-card">
-            <div className="">{item.card.info.isVeg ? "Veg" : "NonVeg"}</div>
-            <div className="">{item.card.info.name}</div>
-            <div className="rupee">{item.card.info.price / 100}</div>
-            <div className="item-description">{item.card.info.description}</div>
-        </div>
-        <div>
-            <img className="item-img" src={CDN_URL + item.card.info.imageId} />
-            <button className="add-btn">ADD</button>
-        </div>
-    </div>)
-}
 export default RestaurantMenu
