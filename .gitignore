@@ -1,3 +1,7 @@
 /node_modules
 .parcel-cache
 dist
+/coverage
+# Local Netlify folder
+.netlify
+netlify/functions/swiggy-proxy/node_modules

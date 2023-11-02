@@ -10,13 +10,19 @@ import Offer from './components/Offer';
 import Error from './components/Error';
 import RestaurantMenu from './components/RestaurantMenu';
 import Shimmer from './components/Shimmer';
+import { Provider } from 'react-redux';
+import appStore from './utils/appStore';
+import Cart from './components/Cart';
 
 const AppLayout = () => {
-    return (<div className="app">
-        <Header />
-        <Outlet />
-        <Footer />
-    </div>)
+    return (
+        <Provider store={appStore}>
+            <div className="app">
+                <Header />
+                <Outlet />
+                <Footer />
+            </div>
+        </Provider>)
 }
 
 const appRouter = createBrowserRouter([
@@ -28,8 +34,12 @@ const appRouter = createBrowserRouter([
             element: <Body />
         },
         {
+            path: "/cart",
+            element: <Cart />
+        },
+        {
             path: "/support",
-            element: <Suspense fallback={<Shimmer/>}><Help /></Suspense>
+            element: <Suspense fallback={<Shimmer />}><Help /></Suspense>
         },
         {
             path: "/offers",

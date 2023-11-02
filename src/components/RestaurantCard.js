@@ -5,19 +5,18 @@ import UserContext from '../utils/UserContext';
 const RestaurantCard = (props) => {
     const { id, name, avgRating, cuisines, areaName, sla, cloudinaryImageId } = props?.restaurantData?.info
     const data = useContext(UserContext)
-    console.log(data)
     return (<Link to={`/restaurant/${id}`} key={id}>
-        <div className="m-4 p-4 w-[240px]" >
-            <img className="w-full h-[160px] rounded-md object-cover" src={CDN_URL + cloudinaryImageId} alt="restaurant-logo" />
+        <div data-testid="resCard" className="m-2 p-4 w-[340px]" >
+            <img className="w-full h-[200px] rounded-xl object-cover" src={CDN_URL + cloudinaryImageId} alt="restaurant-logo" />
             <div className="restaurant-details">
-                <div className="font-bold py-4">{name}</div>
+                <div className="py-4 font-bold">{name}</div>
                 <div className="flex justify-between font-semibold">
                     <div className="rating">{avgRating}</div>
                     <div>{sla.slaString}</div>
                 </div>
-                <div className="text-sm font-light truncate py-1">{cuisines.join(", ")}</div>
-                <div className="text-sm font-light truncate py-1">{areaName}</div>
-                <div>{data?.loggedInUser}</div>
+                <div className="py-1 text-sm font-light truncate">{cuisines.join(", ")}</div>
+                <div className="py-1 text-sm font-light truncate">{areaName}</div>
+                {/* <div>{data?.loggedInUser}</div> */}
             </div>
         </div>
     </Link>)
@@ -28,7 +27,7 @@ const RestaurantCard = (props) => {
 export const withOpenLabel = (RestaurantCard) => {
     return (props) => {
         return (<div className="relative">
-            <label className="absolute bg-green-600 text-white p-1 rounded-md top-6 left-4 text-xs px-2">Is open</label>
+            <label className="absolute p-1 px-2 text-xs text-white bg-green-600 rounded-lg top-6 left-4">Is open</label>
             <RestaurantCard {...props}/>
         </div>)
     }
