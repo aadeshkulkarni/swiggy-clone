@@ -11,11 +11,10 @@ const Cart = () => {
         dispatch(clearCart())
     }
     return (
-        <div className="text-center m-4 p-4">
-            <h1 className="font-bold text-xl">Cart</h1>
+        <div className="p-4 m-4 text-center">
+            <h1 className="text-xl font-bold">Cart</h1>
             <div className="w-6/12 m-auto">
-                <button onClick={() => { handleClearCart() }} className="p-2 m-2 bg-black text-white rounded-lg">Clear cart</button>
-                {cartItems.length === 0 && <h2>Cart is Empty. Add items to the Cart!</h2>}
+                {cartItems.length !== 0 ? <button onClick={() => { handleClearCart() }} className="p-2 m-2 text-white bg-black rounded-lg">Clear cart</button> : <h2>Cart is Empty. Add items to the Cart!</h2>}
                 <ItemList items={cartItems} />
             </div>
         </div>

@@ -1,14 +1,16 @@
 import RestaurantCard, { withOpenLabel } from "./RestaurantCard";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import useRestaurants from "../utils/useRestaurants";
 import Cuisines from "./Cuisines";
+import ConfigContext from "../utils/ConfigContext";
 const Body = () => {
     const isOnline = useOnlineStatus()
     const { listOfRestaurants = [], filteredRestaurant = [], ResturantHeader, setListOfRestaurants, setFilteredRestaurants } = useRestaurants();
     const [searchText, setSearchText] = useState("")
     const RestaurantCardOpen = withOpenLabel(RestaurantCard)
+    const { searchEnabled } = useContext(ConfigContext)
     if (!isOnline) {
         return <div><h1>Looks like you're offline. Please check your internet connection.</h1></div>
     }
@@ -16,7 +18,7 @@ const Body = () => {
         return <Shimmer />
     }
     return (<div className="flex flex-col items-center justify-center">
-        <div className="flex items-center p-4 m-4">
+        {searchEnabled && <div className="flex items-center p-4 m-4">
             <div className="search">
                 <input data-testid="searchInput" type="text" className="p-1 border border-black border-solid" value={searchText} onChange={(e) => { setSearchText(e.target.value) }} />
                 <button className="px-4 py-1 m-4 bg-green-100 rounded-md" onClick={() => {
@@ -35,7 +37,7 @@ const Body = () => {
                     setListOfRestaurants(filteredRestaurant)
                 }}>Top Rated Restaurants</button>
             </div>
-        </div>
+        </div>}
         <div className="grid grid-cols-12">
             <div className="col-span-1"></div>
             <div className="flex flex-wrap items-center justify-center col-span-10">

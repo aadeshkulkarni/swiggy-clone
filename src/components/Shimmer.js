@@ -3,7 +3,7 @@ const Shimmer = () => {
         <div className="col-span-1"></div>
         <div className="flex flex-wrap items-center justify-center col-span-10">
             <div className="flex flex-wrap items-center justify-center col-span-10">
-                {[...Array(12).keys()].map(item => (<div data-testid="resCard" className="m-2 p-4 w-[340px]" >
+                {[...Array(12).keys()].map(item => (<div key={item} data-testid="resCard" className="m-2 p-4 w-[340px]" >
                     <div className="w-full h-[200px] rounded-xl bg-gray-200">
                     </div>
                     <div className="restaurant-details">
