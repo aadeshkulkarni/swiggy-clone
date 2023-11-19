@@ -2,7 +2,6 @@
   "name": "swiggy",
   "version": "1.0.0",
   "description": "food ordering app",
-  "main": "App.js",
   "scripts": {
     "start": "PORT=3000 parcel index.html",
     "build": "parcel build index.html",
@@ -15,6 +14,7 @@
   },
   "author": "Aadesh Kulkarni",
   "license": "ISC",
+  "source": "index.html",
   "bugs": {
     "url": "https://github.com/aadeshkulkarni/annapurna-express/issues"
   },
