@@ -1,4 +1,4 @@
-export default data = {
+export default MOCK_DATA = {
     "card": {
         "card": {
             "@type": "type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget",

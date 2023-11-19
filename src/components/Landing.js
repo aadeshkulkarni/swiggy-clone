@@ -61,9 +61,6 @@ const Landing = () => {
             type="text"
             placeholder="Enter your delivery location"
           ></input>
-          {/* <button onClick={() => fetchLatLng(searchResults[0].place_id)} className="col-span-2 bg-orange-500 text-white font-bold p-4">
-            FIND FOOD
-          </button> */}
           <div className="absolute left-0 top-20 z-30 bg-white border border-gray-300">
             {searchResults &&
               searchResults.length > 0 &&
@@ -87,8 +84,8 @@ const Landing = () => {
               <img className="p-4 w-48" src={LOGO_URL} alt="logo" />
             </Link>
             <div className="flex">
-              <button className="font-semibold px-4 py-2">Login</button>
-              <button className="bg-black text-white px-4 font-semibold  py-2">Sign up</button>
+              <button className="font-semibold px-4 py-2" onClick={()=>console.log("Sign In feature - Coming soon")}>Login</button>
+              <button className="bg-black text-white px-4 font-semibold py-2" onClick={()=>console.log("Sign up feature - Coming soon")}>Sign up</button>
             </div>
           </div>
           <div className="pt-20">
@@ -129,7 +126,7 @@ const Landing = () => {
       </div>
       <div className="bg-rose-950 grid grid-cols-12 text-white p-8 absolute bottom-0 left-0 w-screen">
         {features.map((feature) => (
-          <div className="flex flex-col justify-center items-center col-span-4">
+          <div key={feature.title} className="flex flex-col justify-center items-center col-span-4">
             <img className="w-[105px] aspect-auto" src={feature.img} />
             <div className="py-2 pt-4 font-bold">{feature.title}</div>
             <div className="py-2 text-sm w-[300px] text-center">{feature.description}</div>
