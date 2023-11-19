@@ -13,7 +13,10 @@ const useRestaurantMenu = (resId) => {
 
         const restaurantInfo = json?.data?.cards[0]?.card?.card?.info
         setResInfo(restaurantInfo)
-        const menuCards = json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+        let menuCards = json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+        if(menuCards === undefined){
+            menuCards = json?.data?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+        }
         const menu = menuCards?.filter(card => card.card.card.itemCards !== undefined)
         setMenuInfo(menu)
     }

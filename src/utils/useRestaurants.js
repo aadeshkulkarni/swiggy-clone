@@ -16,8 +16,12 @@ const useRestaurants = () => {
   async function fetchRestaurants() {
     const data = await fetch(PROXY_CORS + RESTAURANTS_API.replace(DEFAULT_LAT, lat).replace(DEFAULT_LNG, lng));
     const json = await data.json();
-    const list = json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-    setRestaurantHeader(json?.data?.cards[2]?.card?.card);
+    let list = json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+    if (list === undefined) {
+      list = json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+    }
+
+    setRestaurantHeader(list === undefined ? json?.data?.cards[3]?.card?.card : json?.data?.cards[2]?.card?.card);
     setListOfRestaurants(list);
     setFilteredRestaurants(list);
   }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ADDRESS_AUTOCOMPLATE_API, ADDRESS_RECOMMENDATION_API, LOGO_URL, PROXY_CORS } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { setAddress } from "../utils/slices/addressSlice";
+import Header from "./Header";
 
 const features = [
   {
@@ -53,7 +54,8 @@ const Landing = () => {
   return (
     <div className="relative h-screen">
       <div className="md:hidden">
-        <div className="flex flex-col justify-center items-center">
+        <Header />
+        <div className="relative flex flex-col justify-center items-center pb-2 pt-20">
           <input
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -124,7 +126,7 @@ const Landing = () => {
           <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_1340/Lunch1_vlksgq" />
         </div>
       </div>
-      <div className="bg-rose-950 grid grid-cols-12 text-white p-8 absolute bottom-0 left-0 w-screen">
+      <div className="flex flex-col bg-rose-950 md:grid grid-cols-12 text-white p-8 md:absolute md:bottom-0 md:left-0 w-screen">
         {features.map((feature) => (
           <div key={feature.title} className="flex flex-col justify-center items-center col-span-4">
             <img className="w-[105px] aspect-auto" src={feature.img} />
