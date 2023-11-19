@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { ADDRESS_AUTOCOMPLATE_API, ADDRESS_RECOMMENDATION_API, LOGO_URL, PROXY_CORS } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { setAddress } from "../utils/slices/addressSlice";
-import Header from "./Header";
 
 const features = [
   {
@@ -24,6 +23,7 @@ const features = [
 ];
 
 const Landing = () => {
+  const [showLocation, setShowLocation] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
@@ -54,30 +54,46 @@ const Landing = () => {
   return (
     <div className="relative h-screen">
       <div className="md:hidden">
-        <Header />
-        <div className="relative flex flex-col justify-center items-center pb-2 pt-20">
-          <input
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            className="text-lg border border-gray-500 p-4 col-span-10 w-screen"
-            type="text"
-            placeholder="Enter your delivery location"
-          ></input>
-          <div className="absolute left-0 top-20 z-30 bg-white border border-gray-300">
-            {searchResults &&
-              searchResults.length > 0 &&
-              searchResults.map((result) => (
-                <div
-                  key={result.place_id}
-                  onClick={() => fetchLatLng(result.place_id)}
-                  className="cursor-pointer hover:bg-gray-50 text-gray-700 text-sm text-light p-4 border-b border-gray-300"
-                >
-                  {result.description}
-                </div>
-              ))}
+        {showLocation && (
+          <div className="relative flex flex-col justify-center items-center pb-2">
+            <div onClick={()=>setShowLocation(false)} className="bg-white z-50 text-gray-500 text-xl px-2 py-1 absolute top-3 left-2">←</div>
+            <input
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className="text-md border border-gray-300 p-4 col-span-10 w-screen pl-16 md:pl-0"
+              type="text"
+              placeholder="Enter area, street name..."
+            ></input>
+            <div className="absolute left-0 top-20 z-30 bg-white border border-gray-300">
+              {searchResults &&
+                searchResults.length > 0 &&
+                searchResults.map((result) => (
+                  <div
+                    key={result.place_id}
+                    onClick={() => fetchLatLng(result.place_id)}
+                    className="cursor-pointer hover:bg-gray-50 text-gray-700 text-sm text-light p-4 border-b border-gray-300"
+                  >
+                    {result.description}
+                  </div>
+                ))}
+            </div>
           </div>
-        </div>
-        <img className="w-screen h-3/5" src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_640/2xImageWideCollection_oksunf" />
+        )}
+        {!showLocation && (
+          <>
+            <img className="w-screen h-3/5" src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_640/2xImageDeliveredQuickly_unovho " />
+            <div className="flex flex-col justify-center items-center p-8">
+              <h3 className="text-xl font-bold text-center">Order from top & Favourite restaurants</h3>
+              <h3 className="text-sm py-2 text-gray-400 text-center">Ready to see top restaurants to order?</h3>
+              <button onClick={() => setShowLocation(true)} className="p-4 bg-orange-500 text-white uppercase font-bold text-sm">
+                Setup your location
+              </button>
+              <div className="py-4 text-center text-sm text-gray-400">
+                <span>Have an account?</span> <span className="text-orange-600">Login</span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className="hidden md:grid grid-cols-12">
         <div className="col-span-6 p-12">
@@ -86,8 +102,12 @@ const Landing = () => {
               <img className="p-4 w-48" src={LOGO_URL} alt="logo" />
             </Link>
             <div className="flex">
-              <button className="font-semibold px-4 py-2" onClick={()=>console.log("Sign In feature - Coming soon")}>Login</button>
-              <button className="bg-black text-white px-4 font-semibold py-2" onClick={()=>console.log("Sign up feature - Coming soon")}>Sign up</button>
+              <button className="font-semibold px-4 py-2" onClick={() => console.log("Sign In feature - Coming soon")}>
+                Login
+              </button>
+              <button className="bg-black text-white px-4 font-semibold py-2" onClick={() => console.log("Sign up feature - Coming soon")}>
+                Sign up
+              </button>
             </div>
           </div>
           <div className="pt-20">
@@ -126,7 +146,7 @@ const Landing = () => {
           <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_1340/Lunch1_vlksgq" />
         </div>
       </div>
-      <div className="flex flex-col bg-rose-950 md:grid grid-cols-12 text-white p-8 md:absolute md:bottom-0 md:left-0 w-screen">
+      <div className="hidden bg-sky-900 md:grid grid-cols-12 text-white p-8 md:absolute md:bottom-0 md:left-0 w-screen">
         {features.map((feature) => (
           <div key={feature.title} className="flex flex-col justify-center items-center col-span-4">
             <img className="w-[105px] aspect-auto" src={feature.img} />
