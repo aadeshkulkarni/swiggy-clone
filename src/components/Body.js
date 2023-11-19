@@ -17,7 +17,7 @@ const Body = () => {
     if (listOfRestaurants?.length === 0) {
         return <Shimmer />
     }
-    return (<div className="flex flex-col items-center justify-center">
+    return (<div className="flex flex-col items-center justify-center bg-gray-50">
         {searchEnabled && <div className="flex items-center p-4 m-4">
             <div className="search">
                 <input data-testid="searchInput" type="text" className="p-1 border border-black border-solid" value={searchText} onChange={(e) => { setSearchText(e.target.value) }} />
@@ -38,7 +38,7 @@ const Body = () => {
                 }}>Top Rated Restaurants</button>
             </div>
         </div>}
-        <div className="grid grid-cols-12">
+        <div className="grid grid-cols-12 mt-20">
             <div className="col-span-1"></div>
             <div className="flex flex-wrap items-center justify-center col-span-10">
                 <Cuisines />
@@ -47,7 +47,7 @@ const Body = () => {
         <div className="grid grid-cols-12">
             <div className="col-span-1"></div>
             <div className="col-span-10">
-                <h1 className="px-8 py-4 text-2xl font-bold">{ResturantHeader?.header?.title}</h1>
+                <h1 className="px-8 py-4 text-xl md:text-2xl font-bold">{ResturantHeader?.header?.title}</h1>
                 <div className="flex flex-wrap items-center justify-center ">
                     {filteredRestaurant?.map((restaurant, index) => restaurant?.info?.isOpen ? <RestaurantCardOpen restaurantData={restaurant} key={index} /> : <RestaurantCard restaurantData={restaurant} key={index} />)}
                 </div>

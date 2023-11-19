@@ -13,8 +13,8 @@ const RestaurantMenu = () => {
     }
 
     return (
-        <div className="px-8 flex flex-col justify-center items-center">
-            <div className="p-4 w-3/4 justify-start text-left">
+        <div className="px-8 flex flex-col justify-center items-center pt-20">
+            <div className="p-4 w-3/6 justify-start text-left">
                 <div className="font-bold">{restaurantInfo?.name}</div>
                 <p className="font-light text-sm text-gray-500">{restaurantInfo?.cuisines.join(", ")}</p>
                 <p className="font-light text-sm text-gray-500">{restaurantInfo?.areaName}, {restaurantInfo?.sla?.lastMileTravelString}</p>
@@ -23,8 +23,8 @@ const RestaurantMenu = () => {
                 <h2>Menu</h2>
                 <h3>{restaurantInfo?.title}</h3>
             </div>
-            <div className="p-4 w-3/4">
-                {menuInfo?.map((card, index) => <RestaurantCategory key={card?.card?.card?.id} card={card?.card?.card} showItems={index === openMenuIndex} setOpenMenuIndex={() => setOpenMenuIndex(openMenuIndex === index ? null : index)} />)}
+            <div className="p-4 w-3/6">
+                {menuInfo?.map((card, index) => <RestaurantCategory key={index} card={card?.card?.card} showItems={index === openMenuIndex} setOpenMenuIndex={() => setOpenMenuIndex(openMenuIndex === index ? null : index)} />)}
             </div>
         </div>
     )
