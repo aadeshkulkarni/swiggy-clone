@@ -1,4 +1,4 @@
-export default MOCK_DATA = {
+const MOCK_DATA = {
     "card": {
         "card": {
             "@type": "type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget",
@@ -716,3 +716,5 @@ export default MOCK_DATA = {
         }
     }
 }
+
+export default MOCK_DATA;
