@@ -56,7 +56,7 @@ const Landing = () => {
 
   return (
     <div className="relative h-screen">
-      <div className="status">Online Status: <div className="text-red-500 bg-red-700">🟢</div></div>
+      {/* <div className="status">Online Status: <div className="text-red-500 bg-red-700">🟢</div></div> */}
       <div className="md:hidden">
         {showLocation && (
           <div className="relative flex flex-col justify-center items-center pb-2">
