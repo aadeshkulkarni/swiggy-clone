@@ -1,19 +1,19 @@
 import RestaurantCard, { withOpenLabel } from "./RestaurantCard";
 import { useContext, useState } from "react";
 import Shimmer from "./Shimmer";
-import useOnlineStatus from "../utils/useOnlineStatus";
+// import useOnlineStatus from "../utils/useOnlineStatus";
 import useRestaurants from "../utils/useRestaurants";
 import Cuisines from "./Cuisines";
 import ConfigContext from "../utils/ConfigContext";
 const Body = () => {
-    const isOnline = useOnlineStatus()
+    // const isOnline = useOnlineStatus()
     const { listOfRestaurants = [], filteredRestaurant = [], ResturantHeader, setListOfRestaurants, setFilteredRestaurants } = useRestaurants();
     const [searchText, setSearchText] = useState("")
     const RestaurantCardOpen = withOpenLabel(RestaurantCard)
     const { searchEnabled } = useContext(ConfigContext)
-    if (!isOnline) {
-        return <div><h1>Looks like you're offline. Please check your internet connection.</h1></div>
-    }
+    // if (!isOnline) {
+    //     return <div><h1>Looks like you're offline. Please check your internet connection.</h1></div>
+    // }
     if (listOfRestaurants?.length === 0) {
         return <Shimmer />
     }
@@ -21,7 +21,7 @@ const Body = () => {
         {searchEnabled && <div className="flex items-center p-4 m-4">
             <div className="search">
                 <input data-testid="searchInput" type="text" className="p-1 border border-black border-solid" value={searchText} onChange={(e) => { setSearchText(e.target.value) }} />
-                <button className="px-4 py-1 m-4 bg-green-100 rounded-md" onClick={() => {
+                <button id="btnSearch" className="px-4 py-1 m-4 bg-green-100 rounded-md" onClick={() => {
                     const filteredRest = listOfRestaurants.filter(restaurant => restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase()))
                     if (filteredRest.length != 0) {
                         setFilteredRestaurants(filteredRest)

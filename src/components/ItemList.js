@@ -13,10 +13,9 @@ const ItemList = ({ items }) => {
   const { restaurantInfo } = useRestaurantMenu(resId);
   const dispatch = useDispatch();
   const handlerAddItem = (item) => {
-    if(restaurant === undefined){
+    if (restaurant === undefined) {
       dispatch(setRestaurant(restaurantInfo));
-    }
-    else if (restaurant?.id !== restaurantInfo?.id) {
+    } else if (restaurant?.id !== restaurantInfo?.id) {
       dispatch(setRestaurant(restaurantInfo));
     }
     dispatch(addItem(item));
@@ -38,7 +37,7 @@ const ItemList = ({ items }) => {
           <div className="text-xs font-light text-gray-400 py-4">{item.card.info.description}</div>
         </div>
         <div className="col-span-2 flex justify-center items-center relative">
-          <img className="md:p-4 object-cover relative rounded-lg" src={CDN_URL + item.card.info.imageId} />
+            <img className="object-cover rounded-lg" src={CDN_URL + item.card.info.imageId ? CDN_URL + item.card.info.imageId : ""} />
           {itemsInCart.length > 0 ? (
             <div className="min-w-[70px] w-[70px] absolute text-sm font-bold bottom-0 -left-4 md:-bottom-2 md:left-2 bg-white border border-gray-50 rounded-md uppercase shadow-lg grid grid-cols-12">
               <button onClick={() => handlerRemoveItem(item)} className="h-full col-span-4 p-2">

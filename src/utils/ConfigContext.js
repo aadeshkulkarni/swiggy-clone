@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 const ConfigContext = createContext({
-    searchEnabled: false
+    searchEnabled: true
 })
 
 export default ConfigContext;

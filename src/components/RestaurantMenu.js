@@ -1,15 +1,21 @@
 import { useParams } from 'react-router-dom';
 import Shimmer from './Shimmer'
+import useOnlineStatus from '../utils/useOnlineStatus';
 import useRestaurantMenu from '../utils/useRestaurantMenu';
 import RestaurantCategory from './RestaurantCategory';
 import { useState } from 'react';
 
 const RestaurantMenu = () => {
+    const isOnline = useOnlineStatus()
+    console.log(isOnline+ ":isOnline changed, so Restaurant Menu re-rendered")
     const [openMenuIndex, setOpenMenuIndex] = useState(0)
     const { resId } = useParams()
     const { restaurantInfo, menuInfo } = useRestaurantMenu(resId)
     if (menuInfo === null) {
         return <Shimmer />
+    }
+    if(!isOnline) {
+        return <div>You're offline</div>
     }
 
     return (

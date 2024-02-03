@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ADDRESS_AUTOCOMPLATE_API, ADDRESS_RECOMMENDATION_API, LOGO_URL, PROXY_CORS } from "../utils/constants";
+import { ADDRESS_AUTOCOMPLATE_API, ADDRESS_RECOMMENDATION_API, LOGO_URL, generateProxyUrl } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { setAddress } from "../utils/slices/addressSlice";
 
@@ -39,20 +39,24 @@ const Landing = () => {
   }, [searchText]);
 
   async function fetchSearchSuggestions() {
-    const data = await fetch(PROXY_CORS + ADDRESS_AUTOCOMPLATE_API.replace("[ADDRESS]", searchText));
+    const resource = generateProxyUrl(ADDRESS_AUTOCOMPLATE_API.replace("[ADDRESS]", searchText))
+    const data = await fetch(resource);
     const result = await data.json();
     setSearchResults(result.data || []);
   }
 
   async function fetchLatLng(placeId) {
-    const data = await fetch(PROXY_CORS + ADDRESS_RECOMMENDATION_API + placeId);
+    const resource = generateProxyUrl(ADDRESS_RECOMMENDATION_API + placeId)
+    const data = await fetch(resource);
     const result = await data.json();
+    console.log(result.data)
     dispatch(setAddress(result.data[0]));
     navigate("/");
   }
 
   return (
     <div className="relative h-screen">
+      <div className="status">Online Status: <div className="text-red-500 bg-red-700">🟢</div></div>
       <div className="md:hidden">
         {showLocation && (
           <div className="relative flex flex-col justify-center items-center pb-2">
@@ -69,11 +73,11 @@ const Landing = () => {
                 searchResults.length > 0 &&
                 searchResults.map((result) => (
                   <div
-                    key={result.place_id}
-                    onClick={() => fetchLatLng(result.place_id)}
+                    key={result?.place_id}
+                    onClick={() => fetchLatLng(result?.place_id)}
                     className="cursor-pointer hover:bg-gray-50 text-gray-700 text-sm text-light p-4 border-b border-gray-300"
                   >
-                    {result.description}
+                    {result?.description}
                   </div>
                 ))}
             </div>
@@ -122,7 +126,7 @@ const Landing = () => {
                   type="text"
                   placeholder="Enter your delivery location"
                 ></input>
-                <button onClick={() => fetchLatLng(searchResults[0].place_id)} className="col-span-2 bg-orange-500 text-white font-bold p-4">
+                <button onClick={() => fetchLatLng(searchResults[0]?.place_id)} className="col-span-2 bg-orange-500 text-white font-bold p-4">
                   FIND FOOD
                 </button>
                 <div className="absolute left-0 top-20 z-30 bg-white border border-gray-300">
@@ -130,11 +134,11 @@ const Landing = () => {
                     searchResults.length > 0 &&
                     searchResults.map((result) => (
                       <div
-                        key={result.place_id}
-                        onClick={() => fetchLatLng(result.place_id)}
+                        key={result?.place_id}
+                        onClick={() => fetchLatLng(result?.place_id)}
                         className="cursor-pointer hover:bg-gray-50 text-gray-700 text-sm text-light p-4 border-b border-gray-300"
                       >
-                        {result.description}
+                        {result?.description}
                       </div>
                     ))}
                 </div>

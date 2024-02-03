@@ -23,6 +23,8 @@ it("should Search resList for Burger text input", async () => {
     const searchInput = screen.getByTestId("searchInput")
     fireEvent.change(searchInput, { target: { value: "Burger" } })
     fireEvent.click(searchBtn)
-    const resCardLength = screen.getAllByTestId("resCard").length;
-    expect(resCardLength).toBe(1)
+    const resCardLength = screen.getAllByTestId("resCard")
+    console.log(screen.getAllByTestId("resCard"))
+    // .length;
+    expect(resCardLength).toBe(2)
 })
